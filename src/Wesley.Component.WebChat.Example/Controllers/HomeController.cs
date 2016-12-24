@@ -58,7 +58,7 @@ namespace Wesley.Component.WebChat.Example.Controllers
             return _messageRepository.GetMessage();
         }
 
-        public void ClearMesssage()
+        public void ClearMessage()
         {
             _messageRepository.ClearMessage();
         }

@@ -40,6 +40,19 @@
             });
         };
 
+        this.clearMessage = function () {
+            if (confirm("确认要清除聊天记录吗？")) {
+                $.ajax({
+                    url: '/Home/ClearMessage',
+                    method: 'GET',
+                    dataType: 'JSON',
+                    success: function (data) {
+                        $('.messages').empty();
+                    }
+                });
+            }
+        };
+
         this.sendMessage = function () {
             var content = $('.message_input').val();
             if (content.length > 0)
@@ -49,20 +62,13 @@
                     method: 'POST',
                     data: {
                         Content: content
-                    },
-                    success: function () {
-                        $('.messages').animate({ scrollTop: $('.messages').prop('scrollHeight') }, 300);
-                    },
-                    complete: function () {
-                        $(".message_input").val("");
                     }
                 });
             }
+            $(".message_input").val("").focus();
         };
 
         this.listMessage = function (data) {
-
-            console.log(JSON.stringify(data));
 
             var templete = $($('.message_template').clone().html());
 
@@ -70,7 +76,9 @@
 
             $('.messages').append(templete);
 
-            console.log(templete);
+            $('.messages').animate({ scrollTop: $('.messages').prop('scrollHeight') }, 300);
+
+            $(".message_input").val("").focus();
 
             setTimeout(function ()
             {
@@ -83,22 +91,29 @@
 
     $(function () {
 
-        var message = new Message();
+        var messager = new Message();
 
-        message.start();
+        messager.start();
 
-        $(".send_message").click(function (e) {
-            message.sendMessage();
+        $(".send_message").click(function (e)
+        {
+            messager.sendMessage();
         });
 
-        $(".message_input").keyup(function (e) {
-            if (e.which === 13) {
-                message.sendMessage();
+        $(".message_input").keyup(function (e)
+        {
+            if (e.which === 13)
+            {
+                messager.sendMessage();
             }
         });
 
         $(".close").click(function (e) {
             $(".messages").toggle();
+        });
+
+        $(".minimize").click(function () {
+            messager.clearMessage();
         });
 
         $(".chat_window").mouseleave(function () {

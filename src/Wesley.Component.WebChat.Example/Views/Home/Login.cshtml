@@ -16,7 +16,8 @@
 </div>
 @section scripts{
     <script type="text/javascript">
-        $(".open_door").click(function (e) {
+
+        var login = function () {
             var password = $(".message_input").val();
             $.ajax({
                 url: '/Home/DoLogin',
@@ -29,13 +30,24 @@
                         $(".title").html("输入的密码不正确！");
                         setTimeout(function () {
                             $(".title").html("密码认证");
-                        },2000);
+                        }, 2000);
                     }
                 },
                 complete: function () {
                     $(".message_input").val("").focus();
                 }
             });
+        }
+
+        $(".open_door").click(function (e) {
+            login();
+        });
+
+
+        $(".message_input").keyup(function (e) {
+            if (e.which === 13) {
+                login();
+            }
         });
     </script>
 }

@@ -9,6 +9,7 @@ namespace Wesley.Component.WebChat.Data
     public class MessageRepository : IMessageRepository
     {
         private List<Message> _sms = new List<Message>();
+
         public void SendMessage(Message sms)
         {
             _sms.Add(sms);
