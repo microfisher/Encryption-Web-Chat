@@ -53,17 +53,6 @@
             $(".messages").toggle();
         });
 
-        $('.minimize').click(function (e) {
-            $.ajax({
-                url: '/Home/ClearPosts',
-                method: 'GET',
-                dataType: 'JSON',
-                success: function (e) {
-                    getMessage();
-                }
-            });
-        });
-
         $(".chat_window").mouseleave(function () {
             $(".messages").hide();
         });
