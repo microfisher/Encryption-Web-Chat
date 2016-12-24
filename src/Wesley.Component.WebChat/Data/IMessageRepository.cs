@@ -6,11 +6,10 @@ using Wesley.Component.WebChat.Models;
 
 namespace Wesley.Component.WebChat.Data
 {
-    public interface IPostRepository
+    public interface IMessageRepository
     {
-        List<Post> GetAll();
-        Post GetPost(int id);
-        void AddPost(Post post);
-        void ClearPost();
+        List<Message> GetMessage();
+        void SendMessage(Message sms);
+        void ClearMessage();
     }
 }

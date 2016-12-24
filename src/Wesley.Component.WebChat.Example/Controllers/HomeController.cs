@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Wesley.Component.WebChat.Hubs;
@@ -9,18 +10,18 @@ using Wesley.Component.WebChat.Models;
 using Wesley.Component.WebChat.Data;
 using Wesley.Component.WebChat.Core;
 using Wesley.Component.WebChat.Extensions;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Wesley.Component.WebChat.Example.Controllers
 {
     public class HomeController : Controller
     {
-        private IPostRepository _postRepository { get; set; }
+        private IMessageRepository _messageRepository { get; set; }
         private IConnectionManager _connectionManager { get; set; }
 
-        public HomeController(IPostRepository postRepository, IConnectionManager connectionManager)
+        public HomeController(IMessageRepository messageRepository, IConnectionManager connectionManager)
         {
-            _postRepository = postRepository;
+            _messageRepository = messageRepository;
             _connectionManager = connectionManager;
         }
 
@@ -52,39 +53,37 @@ namespace Wesley.Component.WebChat.Example.Controllers
             return Json(result);
         }
 
-        [HttpGet]
-        public List<Post> GetPosts()
+        public List<Message> GetMessage()
         {
-            return _postRepository.GetAll();
+            return _messageRepository.GetMessage();
         }
 
-        [HttpGet]
-        public void ClearPosts() {
-            _postRepository.ClearPost();
-        }
-
-        [HttpGet]
-        public Post GetPost(int id)
+        public void ClearMesssage()
         {
-            return _postRepository.GetPost(id);
+            _messageRepository.ClearMessage();
         }
 
-        [HttpPost]
-        public void AddPost(Post post)
+        public void SendMessage(string content)
         {
-            post.UserName =HttpContext.Session.Get<string>("UserName");
-            _postRepository.AddPost(post);
-            _connectionManager.GetHubContext<ChatHub>().Clients.All.publishPost(post);
+            var message = new Message(new Account {
+                UserName= HttpContext.Session.Get<string>("UserName")
+            },new Account {
+
+            },content);
+
+            _messageRepository.SendMessage(message);
+
+            _connectionManager.GetHubContext<ChatHub>().Clients.All.OnMessage(message);
         }
 
-        private bool IsAuthorize() {
-            var result = false;
+        private bool IsAuthorize()
+        {
             var userName = HttpContext.Session.Get<string>("UserName");
             if (!string.IsNullOrWhiteSpace(userName))
             {
-                result= true;
+                return true;
             }
-            return result;
+            return false;
         }
     }
 }

@@ -30,8 +30,6 @@ namespace Wesley.Component.WebChat.Example
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddSingleton<IPostRepository, PostRepository>();
-
             services.AddSession(options => {
                 var cookieName = Configuration["AppSettings:Session:CookieName"];
                 var timeout = Convert.ToInt32(Configuration["AppSettings:Session:Timeout"]);
@@ -44,6 +42,8 @@ namespace Wesley.Component.WebChat.Example
             services.AddSignalR(options => options.Hubs.EnableDetailedErrors = true);
 
             services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddSingleton<IMessageRepository, MessageRepository>();
         }
 
 

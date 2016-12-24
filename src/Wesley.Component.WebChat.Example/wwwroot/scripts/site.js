@@ -1,55 +1,103 @@
 ﻿(function () {
-    var Message;
-    Message = function (arg) {
-        this.text = arg.text, this.message_side = arg.message_side;
-        this.draw = function (_this) {
-            return function () {
-                var $message;
-                $message = $($('.message_template').clone().html());
-                $message.addClass(_this.message_side).find('.text').html(_this.text);
-                $('.messages').append($message);
-                return setTimeout(function () {
-                    return $message.addClass('appeared');
-                }, 0);
+
+    var Message = function (options) {
+
+        var _this = this;
+
+        this.start = function () {
+            var hub = $.connection.chatHub;
+            hub.client.OnMessage = function (data) {
+                console.log(JSON.stringify(data));
+                var model = {
+                    side: (data.FromUser.UserName === 'wesley' ? 'right' : 'left'),
+                    message: data.Content
+                };
+                _this.listMessage(model);
             };
-        }(this);
-        return this;
-    };
-    $(function () {
-        var getMessageText, message_side, sendMessage;
-        message_side = 'right';
-        sendMessage = function (data) {
-            var $messages, message;
-            console.log(JSON.stringify(data));
-            $('.message_input').val('').focus();
-            if (!data.Text) {
-                return;
-            }
-            $messages = $('.messages');
-            message_side = data.UserName === 'wesley' ? 'right' : 'left';
-            message = new Message({
-                text: data.Text,
-                message_side: message_side
-            });
-            message.draw();
-            return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+            $.connection.hub.logging = true;
+            $.connection.hub.start();
+
+            _this.getMessage();
         };
 
-        $('.message_input').keyup(function (e) {
-            if (e.which === 13) {
-                var message = $('.message_input').val();
-                if (message.length > 0) {
-                    $.ajax({
-                        url: '/Home/AddPost',
-                        method: 'POST',
-                        data: {
-                            text: message
-                        }
+        this.getMessage = function ()
+        {
+            $.ajax({
+                url: '/Home/GetMessage',
+                method: 'GET',
+                dataType: 'JSON',
+                success: function (data)
+                {
+                    $.each(data, function (index){
+                        var single = data[index];
+                        var model = {
+                            side: (single.FromUser.UserName === 'wesley' ? 'right' : 'left'),
+                            message: single.Content
+                        };
+                        _this.listMessage(model);
                     });
                 }
+            });
+        };
+
+        this.sendMessage = function () {
+            var content = $('.message_input').val();
+            if (content.length > 0)
+            {
+                $.ajax({
+                    url: '/Home/SendMessage',
+                    method: 'POST',
+                    data: {
+                        Content: content
+                    },
+                    success: function () {
+                        $('.messages').animate({ scrollTop: $('.messages').prop('scrollHeight') }, 300);
+                    },
+                    complete: function () {
+                        $(".message_input").val("");
+                    }
+                });
+            }
+        };
+
+        this.listMessage = function (data) {
+
+            console.log(JSON.stringify(data));
+
+            var templete = $($('.message_template').clone().html());
+
+            templete.addClass(data.side).find('.text').html(data.message);
+
+            $('.messages').append(templete);
+
+            console.log(templete);
+
+            setTimeout(function ()
+            {
+                templete.addClass('appeared');
+            }, 0);
+        };
+
+    };
+
+
+    $(function () {
+
+        var message = new Message();
+
+        message.start();
+
+        $(".send_message").click(function (e) {
+            message.sendMessage();
+        });
+
+        $(".message_input").keyup(function (e) {
+            if (e.which === 13) {
+                message.sendMessage();
             }
         });
-        $('.close').click(function (e) {
+
+        $(".close").click(function (e) {
             $(".messages").toggle();
         });
 
@@ -57,50 +105,7 @@
             $(".messages").hide();
         });
 
-
-        getMessage = function () {
-            $.ajax({
-                url: '/Home/GetPosts',
-                method: 'GET',
-                dataType: 'JSON',
-                success: function (posts) {
-                    $.each(posts, function (index) {
-                        var post = posts[index];
-                        sendMessage(post);
-                    });
-                }
-            });
-        }
-
-        getMessage();
-
-        $('.send_message').click(function (e) {
-            var message = $('.message_input').val();
-            if (message.length > 0) {
-                $.ajax({
-                    url: '/Home/AddPost',
-                    method: 'POST',
-                    data: {
-                        text: message
-                    }
-                });
-            }
-
-        });
-
-
-        var hub = $.connection.chatHub;
-        hub.client.publishPost = sendMessage;
-        $.connection.hub.logging = true;
-        $.connection.hub.start();
-
-
-
-
-
-
-
-
-
     });
+
+
 }.call(this));
