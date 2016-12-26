@@ -76,6 +76,7 @@ namespace Wesley.Component.WebChat.Example
             app.UseWebSockets();
 
             app.UseSignalR();
+
         }
     }
 }

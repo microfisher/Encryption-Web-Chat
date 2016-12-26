@@ -42,6 +42,11 @@ namespace Wesley.Component.WebChat.Example.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 登录操作
+        /// </summary>
+        /// <param name="username">用户名</param>
+        /// <returns></returns>
         public IActionResult DoLogin(string username)
         {
             var result = new StatusResult();
@@ -53,29 +58,59 @@ namespace Wesley.Component.WebChat.Example.Controllers
             return Json(result);
         }
 
+        /// <summary>
+        /// 获取聊天记录
+        /// </summary>
+        /// <returns></returns>
         public List<Message> GetMessage()
         {
             return _messageRepository.GetMessage();
         }
 
+        /// <summary>
+        /// 获取当前时间
+        /// </summary>
+        /// <returns></returns>
+        public double GetCurrentTime()
+        {
+            var span = DateTime.Now.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+            return Math.Floor(span.TotalSeconds);
+        }
+
+        /// <summary>
+        /// 清除聊天记录
+        /// </summary>
         public void ClearMessage()
         {
             _messageRepository.ClearMessage();
         }
 
+        public void RemoveMessage(string guid)
+        {
+            _messageRepository.ClearMessage();
+        }
+
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="content"></param>
         public void SendMessage(string content)
         {
-            var message = new Message(new Account {
-                UserName= HttpContext.Session.Get<string>("UserName")
-            },new Account {
+            var guid = Guid.NewGuid().ToString();
+            var message = new Message(guid, new Account {
+                UserName = HttpContext.Session.Get<string>("UserName")
+            }, new Account {
 
-            },content);
+            }, content, GetCurrentTime());
 
             _messageRepository.SendMessage(message);
-
             _connectionManager.GetHubContext<ChatHub>().Clients.All.OnMessage(message);
         }
 
+        /// <summary>
+        /// 身份验证
+        /// </summary>
+        /// <returns></returns>
         private bool IsAuthorize()
         {
             var userName = HttpContext.Session.Get<string>("UserName");

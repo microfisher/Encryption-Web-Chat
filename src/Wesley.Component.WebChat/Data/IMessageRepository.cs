@@ -11,5 +11,6 @@ namespace Wesley.Component.WebChat.Data
         List<Message> GetMessage();
         void SendMessage(Message sms);
         void ClearMessage();
+        void RemoveMessage(string guid);
     }
 }

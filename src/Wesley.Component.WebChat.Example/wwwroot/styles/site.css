@@ -113,6 +113,9 @@ body {
   height: 60px;
   border-radius: 50%;
   display: inline-block;
+  text-align:center;
+  padding-top:20px;
+  color:#ffffff;
 }
 .messages .message .text_wrapper {
   display: inline-block;
