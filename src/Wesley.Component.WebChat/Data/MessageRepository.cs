@@ -21,6 +21,9 @@ namespace Wesley.Component.WebChat.Data
 
         public List<Message> GetMessage()
         {
+            foreach (var item in _sms) {
+                item.SendTime = GetCurrentTime();
+            }
             return _sms;
         }
 
@@ -35,6 +38,12 @@ namespace Wesley.Component.WebChat.Data
             if (getMessage != null && userName!=null) {
                 _sms.Remove(getMessage);
             }
+        }
+
+        public double GetCurrentTime()
+        {
+            var span = DateTime.Now.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+            return Math.Floor(span.TotalSeconds);
         }
     }
 }

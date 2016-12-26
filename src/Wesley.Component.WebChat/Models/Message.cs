@@ -17,6 +17,8 @@ namespace Wesley.Component.WebChat.Models
 
         public double SendTime { get; set; } = 0;
 
+        public int ReadStatus { get; set; } = 0;
+
         public Message() {
 
         }

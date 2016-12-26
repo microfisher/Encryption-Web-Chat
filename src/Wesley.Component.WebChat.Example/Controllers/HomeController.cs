@@ -28,6 +28,7 @@ namespace Wesley.Component.WebChat.Example.Controllers
         public IActionResult Index()
         {
             if (IsAuthorize()) {
+                ViewData["UserName"] = HttpContext.Session.Get<string>("UserName");
                 return View();
             }
             else

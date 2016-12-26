@@ -1,6 +1,9 @@
 ﻿@{
     ViewData["Title"] = "潘多拉魔盒";
 }
+<script>
+        var UserName="@ViewData["UserName"]";
+</script>
 <div class="chat_window">
     <div class="top_menu">
         <div class="buttons">
@@ -24,7 +27,7 @@
     </div>
 </div>
 <div class="message_template">
-    <li class="message" guid="0" sendTime="0" pauseDiff="0">
+    <li class="message" userName="0" guid="0" sendTime="0" pauseDiff="0">
         <div class="avatar"></div>
         <div class="text_wrapper">
             <div class="text"></div>

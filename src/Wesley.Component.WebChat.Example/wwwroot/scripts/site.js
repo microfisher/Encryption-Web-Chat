@@ -10,7 +10,8 @@
 
         var _totalSecond = 10;
 
-        this.getCurrentTime = function () {
+        this.getCurrentTime = function ()
+        {
             $.ajax({
                 url: "/Home/GetCurrentTime",
                 method: "GET",
@@ -30,7 +31,8 @@
                 guid:data.Id,
                 side: (data.FromUser.UserName === "wesley" ? "right" : "left"),
                 message: data.Content,
-                sendTime:data.SendTime
+                sendTime: data.SendTime,
+                userName: data.FromUser.UserName
             };
             _this.listMessage(model);
         }
@@ -53,6 +55,11 @@
             hub.client.OnMessage = function (data) {
                 _this.bindMessage(data);
                 _this.scroll();
+                if (document.hasFocus()) {
+                    _enableTimer = 1;
+                } else {
+                    _enableTimer = 0;
+                }
             };
             $.connection.hub.logging = true;
             $.connection.hub.start();
@@ -62,17 +69,19 @@
 
             var timer = setInterval(function () {
                 _timeCounter += 1;
-
                 $(".messages").children(".message").each(function () {
                     var guid = $(this).attr("guid");
                     var time = $(this).attr("sendTime");
+                    var userName = $(this).attr("userName");
                     var diff = Number(_timeCounter) - Number(time);
                     if (guid != undefined && time != undefined && time>0) {
                         if (_enableTimer == 1) {
                             if (diff < _totalSecond) {
                                 $(this).children(".avatar").html((_totalSecond - diff));
                             } else {
-                                _this.removeMessage(guid);
+                                if (userName != UserName) {
+                                    _this.removeMessage(guid);
+                                }
                                 $(this).remove();
                             }
                         } else {
@@ -153,10 +162,11 @@
 
             templete.addClass(data.side).find(".text").html(data.message);
 
-            templete.attr('guid', data.guid);
+            templete.attr("guid", data.guid);
 
-            templete.attr('sendTime', data.sendTime);
-
+            templete.attr("sendTime", data.sendTime);
+            
+            templete.attr("userName", data.userName);
 
             $(".messages").append(templete);
 
