@@ -8,6 +8,7 @@ namespace Wesley.Component.WebChat.Data
 {
     public interface IMessageRepository
     {
+        int MaxSequence { get; }
         List<Message> GetMessage();
         void SendMessage(Message sms);
         void SetStatus(string guid);

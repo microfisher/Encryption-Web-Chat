@@ -17,9 +17,10 @@
             var model = {
                 guid: data.Id,
                 side: (data.FromUser.UserName === "wesley" ? "right" : "left"),
-                message: data.Content,
-                sendTime: data.SendTime,
-                readStatus: data.ReadStatus
+                message: data.MessageContent,
+                createdTime: data.CreatedTime,
+                readStatus: data.ReadStatus,
+                sequence: data.Sequence
             };
             _this.listMessage(model);
         }

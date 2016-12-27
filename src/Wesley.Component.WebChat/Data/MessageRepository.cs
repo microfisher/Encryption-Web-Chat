@@ -14,6 +14,18 @@ namespace Wesley.Component.WebChat.Data
 
         private static IHttpContextAccessor _context { get; set; }
 
+        public int MaxSequence {
+            get {
+                if (_sms.Count > 0)
+                {
+                    return _sms.Max(m => m.Sequence);
+                }
+                else {
+                    return 1;
+                }
+            }
+        }
+
         public void SendMessage(Message sms)
         {
             _sms.Add(sms);
@@ -22,7 +34,7 @@ namespace Wesley.Component.WebChat.Data
         public List<Message> GetMessage()
         {
             foreach (var item in _sms) {
-                item.SendTime = GetCurrentTime();
+                item.CreatedTime = GetCurrentTime();
             }
             return _sms;
         }

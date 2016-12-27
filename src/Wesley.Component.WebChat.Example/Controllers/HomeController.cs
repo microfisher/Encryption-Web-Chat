@@ -98,7 +98,7 @@ namespace Wesley.Component.WebChat.Example.Controllers
                 UserName = HttpContext.Session.Get<string>("UserName")
             }, new Account {
 
-            }, content, GetCurrentTime());
+            }, content, GetCurrentTime(), _messageRepository.MaxSequence);
 
             _messageRepository.SendMessage(message);
             _connectionManager.GetHubContext<ChatHub>().Clients.All.OnMessage(message);
