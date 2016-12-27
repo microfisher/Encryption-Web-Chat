@@ -16,7 +16,6 @@
 </div>
 @section scripts{
     <script type="text/javascript">
-
         var login = function () {
             var password = $(".message_input").val();
             $.ajax({
@@ -42,7 +41,6 @@
         $(".open_door").click(function (e) {
             login();
         });
-
 
         $(".message_input").keyup(function (e) {
             if (e.which === 13) {

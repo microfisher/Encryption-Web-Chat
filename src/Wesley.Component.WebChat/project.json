@@ -7,7 +7,8 @@
     "Microsoft.AspNetCore.Mvc.Core": "1.0.1",
     "Microsoft.AspNetCore.SignalR.Server": "0.2.0-preview2-22683",
     "NETStandard.Library": "1.6.1",
-    "protobuf-net": "2.1.0"
+    "protobuf-net": "2.1.0",
+    "StackExchange.Redis": "1.1.608"
   },
 
   "frameworks": {

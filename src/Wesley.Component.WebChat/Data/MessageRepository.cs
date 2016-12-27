@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Wesley.Component.WebChat.Extensions;
 using Wesley.Component.WebChat.Models;
+using StackExchange.Redis;
 
 namespace Wesley.Component.WebChat.Data
 {

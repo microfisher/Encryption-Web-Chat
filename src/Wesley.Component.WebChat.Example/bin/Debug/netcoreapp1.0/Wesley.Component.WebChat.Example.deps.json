@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.0",
-    "signature": "f0d0f8897278f10bbdb5716254b22509c1180ff9"
+    "signature": "42b679ec85f2e0cf13891710bb41a3db97a826d6"
   },
   "compilationOptions": {
     "defines": [
@@ -33,7 +33,8 @@
           "Microsoft.AspNetCore.SignalR.Server": "0.2.0-preview2-22683",
           "Microsoft.AspNetCore.WebSockets": "0.2.0-preview1-final",
           "Microsoft.AspNetCore.Session": "1.1.0",
-          "Wesley.Component.WebChat": "1.0.0"
+          "Wesley.Component.WebChat": "1.0.0",
+          "StackExchange.Redis": "1.1.608"
         },
         "runtime": {
           "Wesley.Component.WebChat.Example.dll": {}
@@ -1737,6 +1738,38 @@
           }
         }
       },
+      "StackExchange.Redis/1.1.608": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Collections.Concurrent": "4.3.0",
+          "System.Collections.NonGeneric": "4.0.1",
+          "System.Diagnostics.Tools": "4.3.0",
+          "System.IO.Compression": "4.3.0",
+          "System.IO.FileSystem": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Net.NameResolution": "4.0.0",
+          "System.Net.Security": "4.0.0",
+          "System.Net.Sockets": "4.3.0",
+          "System.Reflection.Emit": "4.3.0",
+          "System.Reflection.Emit.Lightweight": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.3.0",
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Security.Cryptography.X509Certificates": "4.3.0",
+          "System.Text.RegularExpressions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Thread": "4.3.0",
+          "System.Threading.ThreadPool": "4.3.0",
+          "System.Threading.Timer": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.5/StackExchange.Redis.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.5/StackExchange.Redis.dll": {}
+        }
+      },
       "System.AppContext/4.3.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
@@ -2903,7 +2936,8 @@
           "Microsoft.AspNetCore.Mvc.Core": "1.0.1",
           "Microsoft.AspNetCore.SignalR.Server": "0.2.0-preview2-22683",
           "NETStandard.Library": "1.6.1",
-          "protobuf-net": "2.1.0"
+          "protobuf-net": "2.1.0",
+          "StackExchange.Redis": "1.1.608"
         },
         "runtime": {
           "Wesley.Component.WebChat.dll": {}
@@ -4145,6 +4179,11 @@
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-VB5cn/7OzUfzdnC8tqAIMQciVLiq2epm2NrAm1E9OjNRyG4lVhfR61SMcLizejzQP8R8Uf/0l5qOIbUEi+RdEg=="
+    },
+    "StackExchange.Redis/1.1.608": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SXorfrt0kXU1ueYRvdZcZ87da7o75j0LTrOtRD7xbD1b/AhnL9nTohmHfz4Ob7ENwf7ecxl1L3vmSET3nemz7w=="
     },
     "System.AppContext/4.3.0": {
       "type": "package",

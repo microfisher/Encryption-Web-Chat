@@ -114,6 +114,7 @@
 --reference:C:\Users\john\.nuget\packages\NuGet.RuntimeModel\3.5.0-beta2-1484\lib\netstandard1.3\NuGet.RuntimeModel.dll
 --reference:C:\Users\john\.nuget\packages\NuGet.Versioning\3.5.0-beta2-1484\lib\netstandard1.0\NuGet.Versioning.dll
 --reference:C:\Users\john\.nuget\packages\protobuf-net\2.1.0\lib\netstandard1.5\protobuf-net.dll
+--reference:C:\Users\john\.nuget\packages\StackExchange.Redis\1.1.608\lib\netstandard1.5\StackExchange.Redis.dll
 --reference:C:\Users\john\.nuget\packages\System.AppContext\4.3.0\ref\netstandard1.6\System.AppContext.dll
 --reference:C:\Users\john\.nuget\packages\System.Buffers\4.3.0\lib\netstandard1.1\System.Buffers.dll
 --reference:C:\Users\john\.nuget\packages\System.Collections\4.3.0\ref\netstandard1.3\System.Collections.dll
