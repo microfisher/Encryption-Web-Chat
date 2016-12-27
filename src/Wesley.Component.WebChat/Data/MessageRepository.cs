@@ -27,16 +27,12 @@ namespace Wesley.Component.WebChat.Data
             return _sms;
         }
 
-        public void ClearMessage() {
-            _sms.Clear();
-        }
-
-        public void RemoveMessage(string guid)
+        public void SetStatus(string guid)
         {
-            var userName = _context.HttpContext.Session.Get<string>("UserName");
-            var getMessage = _sms.Find(m => m.Id == guid && m.FromUser.UserName.ToLower()== userName.ToLower());
-            if (getMessage != null && userName!=null) {
-                _sms.Remove(getMessage);
+            var message = _sms.Find(m => m.Id.ToLower() == guid.ToLower());
+            if (message != null)
+            {
+                message.ReadStatus = 1;
             }
         }
 

@@ -79,16 +79,12 @@ namespace Wesley.Component.WebChat.Example.Controllers
         }
 
         /// <summary>
-        /// 清除聊天记录
+        /// 移除已读消息
         /// </summary>
-        public void ClearMessage()
+        /// <param name="guid"></param>
+        public void SetStatus(string guid)
         {
-            _messageRepository.ClearMessage();
-        }
-
-        public void RemoveMessage(string guid)
-        {
-            _messageRepository.ClearMessage();
+            _messageRepository.SetStatus(guid);
         }
 
         /// <summary>

@@ -1,26 +1,13 @@
-﻿(function () {
+﻿(function ($) { var vis = function () { var stateKey, eventKey, keys = { hidden: "visibilitychange", webkitHidden: "webkitvisibilitychange", mozHidden: "mozvisibilitychange", msHidden: "msvisibilitychange" }; for (stateKey in keys) if (stateKey in document) { eventKey = keys[stateKey]; break } return function (c) { if (c) document.addEventListener(eventKey, c); return !document[stateKey] } }(); $.fn.TabWindowVisibilityManager = function (options) { var defaults = { onFocusCallback: function () { }, onBlurCallback: function () { } }; var o = $.extend(defaults, options); var notIE = document.documentMode === undefined, isChromium = window.chrome; this.each(function () { vis(function () { if (vis()) setTimeout(function () { o.onFocusCallback() }, 300); else o.onBlurCallback() }); if (notIE && !isChromium) $(window).on("focusin", function () { setTimeout(function () { o.onFocusCallback() }, 300) }).on("focusout", function () { o.onBlurCallback() }); else if (window.addEventListener) { window.addEventListener("focus", function (event) { setTimeout(function () { o.onFocusCallback() }, 300) }, false); window.addEventListener("blur", function (event) { o.onBlurCallback() }, false) } else { window.attachEvent("focus", function (event) { setTimeout(function () { o.onFocusCallback() }, 300) }); window.attachEvent("blur", function (event) { o.onBlurCallback() }) } }); return this } })(jQuery);
+
+(function () {
 
     var Message = function (options) {
 
         var _this = this;
-
-        var _timeCounter = 0;
-
-        var _enableTimer = 1;
-
-        var _totalSecond = 10;
-
-        this.getCurrentTime = function ()
-        {
-            $.ajax({
-                url: "/Home/GetCurrentTime",
-                method: "GET",
-                dataType: "JSON",
-                success: function (data) {
-                    _timeCounter = data;
-                }
-            });
-        };
+        var _timer = null;
+        var _countDown = 10;
+        var _enableTimer = 0;
 
         this.scroll = function () {
             $(".messages").animate({ scrollTop: $(".messages").prop("scrollHeight") }, 300);
@@ -28,82 +15,70 @@
 
         this.bindMessage=function(data){
             var model = {
-                guid:data.Id,
+                guid: data.Id,
                 side: (data.FromUser.UserName === "wesley" ? "right" : "left"),
                 message: data.Content,
                 sendTime: data.SendTime,
-                userName: data.FromUser.UserName
+                readStatus: data.ReadStatus
             };
             _this.listMessage(model);
         }
 
 
-        this.removeMessage = function (data) {
-            $.ajax({
-                url: "/Home/RemoveMessage",
-                method: "GET",
-                dataType: "JSON",
-                data: { guid: data },
-                success: function (data) {
+        this.count = function () {
+            $(".messages").children(".message").each(function () {
+                var id = $(this).attr("id");
+                var countDown = parseInt($(this).attr("countDown"));
+                var readStatus = parseInt($(this).attr("readStatus"));
+                if (countDown > 0)
+                {
+                    $(this).attr("countDown", (countDown - 1))
+                    $(this).children(".avatar").html((countDown - 1));
+                } else if (readStatus == 0) {
+                    $.ajax({
+                        url: "/Home/SetStatus",
+                        method: "GET",
+                        dataType: "JSON",
+                        data: { guid: id },
+                        success: function (data)
+                        {
 
+                        }
+                    });
+                    $(this).attr("readStatus", 1);
+                    $(this).children(".text_wrapper").children().hide();
+                    if ($(this).hasClass("left")) {
+                        $(this).children(".avatar").html("^_^");
+                    } else {
+                        $(this).children(".avatar").html("*_*");
+                    }
+                    $(this).children(".avatar").on("mouseover", function ()
+                    {
+                        $(this).parent().children(".text_wrapper").children().show();
+                    }).on("mouseout", function ()
+                    {
+                        $(this).parent().children(".text_wrapper").children().hide();
+                    });
                 }
             });
         };
 
+
         this.start = function () {
             var hub = $.connection.chatHub;
             hub.client.OnMessage = function (data) {
+
                 _this.bindMessage(data);
                 _this.scroll();
-                if (document.hasFocus()) {
-                    _enableTimer = 1;
-                } else {
-                    _enableTimer = 0;
-                }
             };
-            $.connection.hub.logging = true;
+
+            $.connection.hub.logging = false;
             $.connection.hub.start();
 
             _this.getMessage();
-            _this.getCurrentTime();
-
-            var timer = setInterval(function () {
-                _timeCounter += 1;
-                $(".messages").children(".message").each(function () {
-                    var guid = $(this).attr("guid");
-                    var time = $(this).attr("sendTime");
-                    var userName = $(this).attr("userName");
-                    var diff = Number(_timeCounter) - Number(time);
-                    if (guid != undefined && time != undefined && time>0) {
-                        if (_enableTimer == 1) {
-                            if (diff < _totalSecond) {
-                                $(this).children(".avatar").html((_totalSecond - diff));
-                            } else {
-                                if (userName != UserName) {
-                                    _this.removeMessage(guid);
-                                }
-                                $(this).remove();
-                            }
-                        } else {
-                            var pauseDiff = $(this).attr("pauseDiff");
-                            $(this).attr("sendTime", (Number(_timeCounter) - Number(pauseDiff)));
-                        }
-                    }
-                });
+            _timer = setInterval(function () {
+                _this.count();
             }, 1000);
-
-            $(window).focus(function () {
-                _enableTimer = 1;
-            });
-
-            $(window).blur(function () {
-                _enableTimer = 0;
-                $(".messages").children(".message").each(function () {
-                    var time = $(this).attr("sendTime");
-                    var diff = Number(_timeCounter) - Number(time);
-                    $(this).attr("pauseDiff", diff);
-                });
-            });
 
             $(".message_input").focus();
 
@@ -112,7 +87,7 @@
         this.getMessage = function ()
         {
             $.ajax({
-                url: "/Home/GetMessage",
+                url: "/Home/GetMessage",  
                 method: "GET",
                 dataType: "JSON",
                 success: function (data)
@@ -159,14 +134,28 @@
         this.listMessage = function (data) {
 
             var templete = $($(".message_template").clone().html());
-
             templete.addClass(data.side).find(".text").html(data.message);
+            templete.attr("id", data.guid);
+            if (data.readStatus == 0) {
+                templete.attr("countDown", _countDown);
+            } else {
+                templete.attr("countDown", 0);
+                if (data.side == "left") {
+                    templete.children(".avatar").html("^_^");
+                } else {
+                    templete.children(".avatar").html("*_*");
+                }
 
-            templete.attr("guid", data.guid);
-
-            templete.attr("sendTime", data.sendTime);
-            
-            templete.attr("userName", data.userName);
+                templete.children(".text_wrapper").children().hide();
+                templete.children(".avatar").on("mouseover", function ()
+                {
+                    $(this).parent().children(".text_wrapper").children().show();
+                }).on("mouseout", function ()
+                {
+                    $(this).parent().children(".text_wrapper").children().hide();
+                });
+            }
+            templete.attr("readStatus", data.readStatus);
 
             $(".messages").append(templete);
 
@@ -197,18 +186,6 @@
                 messager.sendMessage();
             }
         });
-
-        //$(".close").click(function (e) {
-        //    $(".messages").toggle();
-        //});
-
-        //$(".minimize").click(function () {
-        //    messager.clearMessage();
-        //});
-
-        //$(".chat_window").mouseleave(function () {
-        //    //$(".messages").hide();
-        //});
 
     });
 
