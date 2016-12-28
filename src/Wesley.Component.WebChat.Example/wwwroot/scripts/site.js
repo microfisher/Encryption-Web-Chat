@@ -53,7 +53,7 @@
                     } else {
                         $(this).children(".avatar").html("*_*");
                     }
-                    $(this).children(".avatar").on("mouseover", function ()
+                    $(this).children(".text_wrapper").on("mouseover", function ()
                     {
                         $(this).parent().children(".text_wrapper").children().show();
                     }).on("mouseout", function ()
@@ -148,7 +148,7 @@
                 }
 
                 templete.children(".text_wrapper").children().hide();
-                templete.children(".avatar").on("mouseover", function ()
+                templete.children(".text_wrapper").on("mouseover", function ()
                 {
                     $(this).parent().children(".text_wrapper").children().show();
                 }).on("mouseout", function ()
