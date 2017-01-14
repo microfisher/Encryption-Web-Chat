@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "潘多拉魔盒";
+}
+<div class="chat_window">
+    <div class="top_menu">
+        <div class="buttons">
+            <div class="button close"></div>
+            <div class="button minimize"></div>
+            <div class="button maximize"></div>
+        </div>
+        <div class="title">潘多拉魔盒</div>
+    </div>
+    <div class="chat_body">
+        <ul class="messages"></ul>
+    </div>
+    <div class="bottom_wrapper clearfix">
+        <div class="message_input_wrapper">
+            <input type="text" class="message_input" placeholder="">
+        </div>
+        <div class="send_message">
+            <div class="icon"></div>
+            <div class="text">传</div>
+        </div>
+    </div>
+</div>
+<div class="message_template">
+    <li class="message" id="0" countDown="0" readStatus="0" >
+        <div class="avatar"></div>
+        <div class="text_wrapper">
+            <div class="text"></div>
+        </div>
+    </li>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            var messager = new Messager();
+            messager.start();
+            $(".send_message").click(function (e) {
+                messager.sendMessage();
+            });
+            $(".message_input").keyup(function (e) {
+                if (e.which === 13) {
+                    messager.sendMessage();
+                }
+            });
+        });
+    </script>
+    <script src="~/libraries/signalr/jquery.signalr-2.2.0.min.js"></script>
+    <script src="~/scripts/messager.js" asp-append-version="true"></script>
+    <script src="~/signalr/hubs"></script>
+} 

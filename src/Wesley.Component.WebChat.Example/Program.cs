@@ -17,7 +17,7 @@ namespace Wesley.Component.WebChat.Example
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
-
+            
             host.Run();
         }
     }

@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.0/",
-    "signature": "7d69f8a8e85990796453c36079074defe69160a4"
+    "signature": "6879178648025b94050977fd688b3035f77c2322"
   },
   "compilationOptions": {
     "defines": [
@@ -34,7 +34,8 @@
           "Microsoft.AspNetCore.WebSockets": "0.2.0-preview1-final",
           "Microsoft.AspNetCore.Session": "1.1.0",
           "Wesley.Component.WebChat": "1.0.0",
-          "StackExchange.Redis": "1.1.608"
+          "StackExchange.Redis": "1.1.608",
+          "Microsoft.Extensions.Caching.Redis": "1.1.0"
         },
         "compile": {
           "Wesley.Component.WebChat.Example.dll": {}
@@ -733,6 +734,17 @@
           "lib/netstandard1.3/Microsoft.Extensions.Caching.Memory.dll": {}
         }
       },
+      "Microsoft.Extensions.Caching.Redis/1.1.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "1.1.0",
+          "Microsoft.Extensions.Options": "1.1.0",
+          "NETStandard.Library": "1.6.1",
+          "StackExchange.Redis.StrongName": "1.1.605"
+        },
+        "compile": {
+          "lib/netstandard1.5/Microsoft.Extensions.Caching.Redis.dll": {}
+        }
+      },
       "Microsoft.Extensions.Configuration/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Configuration.Abstractions": "1.1.0",
@@ -1331,6 +1343,35 @@
         },
         "compile": {
           "lib/netstandard1.5/StackExchange.Redis.dll": {}
+        }
+      },
+      "StackExchange.Redis.StrongName/1.1.605": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Collections.Concurrent": "4.3.0",
+          "System.Collections.NonGeneric": "4.0.1",
+          "System.Diagnostics.Tools": "4.3.0",
+          "System.IO.Compression": "4.3.0",
+          "System.IO.FileSystem": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Net.NameResolution": "4.0.0",
+          "System.Net.Security": "4.0.0",
+          "System.Net.Sockets": "4.3.0",
+          "System.Reflection.Emit": "4.3.0",
+          "System.Reflection.Emit.Lightweight": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.3.0",
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Security.Cryptography.X509Certificates": "4.3.0",
+          "System.Text.RegularExpressions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Thread": "4.3.0",
+          "System.Threading.ThreadPool": "4.3.0",
+          "System.Threading.Timer": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.5/StackExchange.Redis.StrongName.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -2736,7 +2777,8 @@
           "Microsoft.AspNetCore.WebSockets": "0.2.0-preview1-final",
           "Microsoft.AspNetCore.Session": "1.1.0",
           "Wesley.Component.WebChat": "1.0.0",
-          "StackExchange.Redis": "1.1.608"
+          "StackExchange.Redis": "1.1.608",
+          "Microsoft.Extensions.Caching.Redis": "1.1.0"
         },
         "runtime": {
           "Wesley.Component.WebChat.Example.dll": {}
@@ -3438,6 +3480,17 @@
           "lib/netstandard1.3/Microsoft.Extensions.Caching.Memory.dll": {}
         }
       },
+      "Microsoft.Extensions.Caching.Redis/1.1.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "1.1.0",
+          "Microsoft.Extensions.Options": "1.1.0",
+          "NETStandard.Library": "1.6.1",
+          "StackExchange.Redis.StrongName": "1.1.605"
+        },
+        "runtime": {
+          "lib/netstandard1.5/Microsoft.Extensions.Caching.Redis.dll": {}
+        }
+      },
       "Microsoft.Extensions.Configuration/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Configuration.Abstractions": "1.1.0",
@@ -4030,6 +4083,35 @@
         },
         "runtime": {
           "lib/netstandard1.5/StackExchange.Redis.dll": {}
+        }
+      },
+      "StackExchange.Redis.StrongName/1.1.605": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Collections.Concurrent": "4.3.0",
+          "System.Collections.NonGeneric": "4.0.1",
+          "System.Diagnostics.Tools": "4.3.0",
+          "System.IO.Compression": "4.3.0",
+          "System.IO.FileSystem": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Net.NameResolution": "4.0.0",
+          "System.Net.Security": "4.0.0",
+          "System.Net.Sockets": "4.3.0",
+          "System.Reflection.Emit": "4.3.0",
+          "System.Reflection.Emit.Lightweight": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.3.0",
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Security.Cryptography.X509Certificates": "4.3.0",
+          "System.Text.RegularExpressions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Thread": "4.3.0",
+          "System.Threading.ThreadPool": "4.3.0",
+          "System.Threading.Timer": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.5/StackExchange.Redis.StrongName.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -5588,6 +5670,11 @@
       "serviceable": true,
       "sha512": "sha512-6+7zTufCnZ+tfrUo7RbIRR3LB0BxwOwxfXuo0IbLyIvgoToGpWuz5wYEDfCYNOvpig9tY8FA0I1uRHYmITMXMQ=="
     },
+    "Microsoft.Extensions.Caching.Redis/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/lCn80WZ9PBqtfo41BJI1ofX+/kPFjA0WT00jyBJu7wLugEj1GDmx7er77eeTzhbv1JOAd28fN/kt9IrSf1mgg=="
+    },
     "Microsoft.Extensions.Configuration/1.0.0": {
       "type": "package",
       "serviceable": true,
@@ -5897,6 +5984,11 @@
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-SXorfrt0kXU1ueYRvdZcZ87da7o75j0LTrOtRD7xbD1b/AhnL9nTohmHfz4Ob7ENwf7ecxl1L3vmSET3nemz7w=="
+    },
+    "StackExchange.Redis.StrongName/1.1.605": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KfEOwWxRomytavYbyhQhAWGOzG5oUfmiJfruwGjYXpu/DztUrxJciDLvrLlsoyGCIJ6m9NA5sW4nVY3bLW1BSg=="
     },
     "System.AppContext/4.3.0": {
       "type": "package",

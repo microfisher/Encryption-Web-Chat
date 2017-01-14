@@ -8,11 +8,11 @@
     <title>@ViewData["Title"]</title>
 
     <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/libraries/bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" href="~/styles/site.css" />
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/libraries/bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" href="~/styles/site.css" />
     </environment>
 </head>
@@ -20,12 +20,12 @@
 @RenderBody()
 
     <environment names="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/libraries/jquery/jquery.js"></script>
+        <script src="~/libraries/bootstrap/js/bootstrap.js"></script>
     </environment>
     <environment names="Staging,Production">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/libraries/jquery/jquery.js"></script>
+        <script src="~/libraries/bootstrap/js/bootstrap.js"></script>
     </environment>
 
     @RenderSection("scripts", required: false)

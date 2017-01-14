@@ -25,7 +25,8 @@
     "Microsoft.AspNetCore.WebSockets": "0.2.0-*",
     "Microsoft.AspNetCore.Session": "1.1.0",
     "Wesley.Component.WebChat": "1.0.0-*",
-    "StackExchange.Redis": "1.1.608"
+    "StackExchange.Redis": "1.1.608",
+    "Microsoft.Extensions.Caching.Redis": "1.1.0"
   },
 
   "tools": {
@@ -62,7 +63,7 @@
       "web.config"
     ]
   },
-
+  
   "scripts": {
     "prepublish": [ "bower install", "dotnet bundle" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]

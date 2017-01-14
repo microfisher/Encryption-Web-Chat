@@ -1,0 +1,58 @@
+﻿<div class="chat_login">
+    <div class="top_menu">
+        <div class="buttons">
+        </div>
+        <div class="title">芝麻开门</div>
+    </div>
+    <div class="login_wrapper clearfix">
+        <div class="message_input_wrapper">
+            <input type="password" class="message_input" maxlength="16" placeholder="">
+        </div>
+        <div class="open_door">
+            <div class="icon"></div>
+            <div class="text">开</div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        function showMessage(msg) {
+            $(".title").html(msg);
+            setTimeout(function () {
+                $(".title").html("芝麻开门");
+            }, 2000);
+        };
+
+        function login() {
+            var password = $(".message_input").val();
+            $.ajax({
+                url: '/Messager/DoLogin',
+                method: 'POST',
+                data: { username: password },
+                success: function (d) {
+                    if (d.Status == 1) {
+                        window.location = "/Messager/Index";
+                    } else {
+                        showMessage("输入的密码不正确！");
+                    }
+                },
+                complete: function () {
+                    $(".message_input").val("").focus();
+                },
+                error: function () {
+                    showMessage("请求数据失败！");
+                }
+            });
+        }
+
+        $(".open_door").click(function (e) {
+            login();
+        });
+
+        $(".message_input").keyup(function (e) {
+            if (e.which === 13) {
+                login();
+            }
+        });
+    </script>
+}

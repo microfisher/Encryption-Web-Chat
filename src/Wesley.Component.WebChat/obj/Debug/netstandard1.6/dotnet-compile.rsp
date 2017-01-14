@@ -115,6 +115,8 @@
 --reference:C:\Users\john\.nuget\packages\System.Xml.XDocument\4.3.0\ref\netstandard1.3\System.Xml.XDocument.dll
 --reference:C:\Users\john\.nuget\packages\System.Xml.XmlSerializer\4.0.11\ref\netstandard1.3\System.Xml.XmlSerializer.dll
 D:\wwwroot\Demo\WebChat\src\Wesley.Component.WebChat\Core\StatusResult.cs
+D:\wwwroot\Demo\WebChat\src\Wesley.Component.WebChat\Data\AccountRepository.cs
+D:\wwwroot\Demo\WebChat\src\Wesley.Component.WebChat\Data\IAccountRepository.cs
 D:\wwwroot\Demo\WebChat\src\Wesley.Component.WebChat\Data\IMessageRepository.cs
 D:\wwwroot\Demo\WebChat\src\Wesley.Component.WebChat\Data\MessageRepository.cs
 D:\wwwroot\Demo\WebChat\src\Wesley.Component.WebChat\Extensions\SessionExtensions.cs

@@ -32,7 +32,7 @@ namespace Wesley.Component.WebChat.Data
             _sms.Add(sms);
         }
 
-        public List<Message> GetMessage()
+        public List<Message> GetMessageList()
         {
             foreach (var item in _sms) {
                 item.CreatedTime = GetCurrentTime();
@@ -40,7 +40,7 @@ namespace Wesley.Component.WebChat.Data
             return _sms;
         }
 
-        public void SetStatus(string guid)
+        public void UpdateStatus(string guid)
         {
             var message = _sms.Find(m => m.Id.ToLower() == guid.ToLower());
             if (message != null)
