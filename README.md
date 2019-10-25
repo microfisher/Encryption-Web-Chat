@@ -17,13 +17,3 @@
 ![帐号登录](https://github.com/coldicelion/Encryption-Web-Chat/blob/master/src/Wesley.Component.WebChat.Example/Resources/login.png?raw=true)
 
 ![聊天窗口](https://github.com/coldicelion/Encryption-Web-Chat/blob/master/src/Wesley.Component.WebChat.Example/Resources/chat.png?raw=true)
-
-
-### 技术探讨/联系方式
-
-- QQ号: 276679490
-
-- 爬虫架构讨论群：180085853
-
-
-
